@@ -3,6 +3,9 @@ import { config } from 'dotenv';
 import morgan from 'morgan';
 import colors from 'colors';
 
+// Route files
+import route from './src/routes';
+
 // Loads .env file contents into process.env
 config();
 
@@ -15,6 +18,8 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+route(app);
 
 const port = 5000;
 
