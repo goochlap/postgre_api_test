@@ -5,7 +5,7 @@ import colors from 'colors';
 import { errorHandler } from './src/middlewares/error';
 
 // Route files
-import route from './src/routes';
+import videos from './src/routes/videos';
 
 // Loads .env file contents into process.env
 config();
@@ -20,7 +20,8 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-route(app);
+// Mount routers
+app.use('/videos', videos);
 
 // Handling errors
 app.use(errorHandler);
