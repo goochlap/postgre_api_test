@@ -20,12 +20,9 @@ export const removeTag = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
 
   const tag = await Tag.findOne({ where: { id } });
-
-  if (!tag) {
-    return next(new ErrorResponse(`Tag not found with id ${id}`, 404));
-  }
+  if (!tag) return next(new ErrorResponse(`Tag not found with id ${id}`, 404));
 
   await tag.destroy({ where: { id } });
 
-  res.status(204).json({ success: true, data: {} });
+  next(res.status(204));
 });

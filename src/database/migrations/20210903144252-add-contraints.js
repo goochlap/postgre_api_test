@@ -1,4 +1,5 @@
 'use strict';
+
 export async function up(queryInterface, Sequelize) {
   await queryInterface.createTable('Tags', {
     id: {
@@ -8,7 +9,9 @@ export async function up(queryInterface, Sequelize) {
       type: Sequelize.INTEGER
     },
     value: {
-      type: Sequelize.STRING
+      type: Sequelize.STRING,
+      allowNull: false,
+      unique: true
     },
     createdAt: {
       allowNull: false,

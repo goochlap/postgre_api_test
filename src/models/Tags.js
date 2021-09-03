@@ -16,8 +16,8 @@ export default (sequelize, DataTypes) => {
     {
       value: {
         type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
+        unique: true,
+        allowNull: false
       }
     },
     {
