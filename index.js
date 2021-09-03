@@ -2,6 +2,7 @@ import express from 'express';
 import { config } from 'dotenv';
 import morgan from 'morgan';
 import colors from 'colors';
+import { errorHandler } from './src/middlewares/error';
 
 // Route files
 import route from './src/routes';
@@ -20,6 +21,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 route(app);
+
+// Handling errors
+app.use(errorHandler);
 
 const port = 5000;
 
