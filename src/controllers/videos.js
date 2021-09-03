@@ -1,4 +1,5 @@
 import model from '../models';
+import ErrorResponse from '../utils/errorResponse';
 
 const { Video } = model;
 
@@ -22,9 +23,15 @@ export const getVideo = async (req, res, next) => {
   try {
     const video = await Video.findOne({ where: { id: req.params.id } });
 
+    if (!video) {
+      return next(
+        new ErrorResponse(`Video not found with id ${req.params.id}`, 404)
+      );
+    }
+
     res.status(200).json({ success: true, data: video });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -37,7 +44,7 @@ export const createVideo = async (req, res, next) => {
 
     res.status(201).json({ success: true, data: video });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -49,14 +56,17 @@ export const updateVideo = async (req, res, next) => {
     const { name, url, description } = req.body;
     const id = req.params.id;
 
-    const video = await Video.update(
-      { name, url, description },
-      { where: { id } }
-    );
+    const video = await Video.findOne({ where: { id } });
 
-    res.status(200).json({ success: true, data: video });
+    if (!video) {
+      return next(new ErrorResponse(`Video not found with id ${id}`, 404));
+    }
+
+    const updatedVideo = await video.update({ name, url, description });
+
+    res.status(200).json({ success: true, data: updateVideo });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -67,10 +77,16 @@ export const removeVideo = async (req, res, next) => {
   try {
     const id = req.params.id;
 
-    const video = await Video.destroy({ where: { id } });
+    const video = await Video.findOne({ where: { id: req.params.id } });
+
+    if (!video) {
+      return next(new ErrorResponse(`Video not found with id ${id}`, 404));
+    }
+
+    await video.destroy({ where: { id } });
 
     res.status(204).json({ success: true, data: {} });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
