@@ -14,12 +14,15 @@ export default (sequelize, DataTypes) => {
   }
   Tags.init(
     {
-      value: DataTypes.STRING,
-      allowNull: false
+      value: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
+      }
     },
     {
       sequelize,
-      modelName: 'Tags'
+      modelName: 'Tag'
     }
   );
   return Tags;

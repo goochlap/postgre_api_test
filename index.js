@@ -6,6 +6,7 @@ import { errorHandler } from './src/middlewares/error';
 
 // Route files
 import videos from './src/routes/videos';
+import tags from './src/routes/tags';
 
 // Loads .env file contents into process.env
 config();
@@ -22,6 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Mount routers
 app.use('/videos', videos);
+app.use('/tags', tags);
 
 // Handling errors
 app.use(errorHandler);
