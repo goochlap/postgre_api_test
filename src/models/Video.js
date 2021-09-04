@@ -17,9 +17,9 @@ export default (sequelize, DataTypes) => {
   }
   Video.init(
     {
-      name: DataTypes.STRING,
+      name: { type: DataTypes.STRING, allowNull: false },
       description: DataTypes.STRING,
-      url: DataTypes.STRING
+      url: { type: DataTypes.STRING, allowNull: false }
     },
     {
       sequelize,

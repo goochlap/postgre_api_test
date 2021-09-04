@@ -11,7 +11,7 @@ export default (sequelize, DataTypes) => {
     static associate(models) {
       this.belongsToMany(models.Video, {
         through: 'VideoTags',
-        foreignKey: 'vagId'
+        foreignKey: 'tagId'
       });
     }
   }

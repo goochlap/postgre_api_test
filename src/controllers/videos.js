@@ -2,7 +2,7 @@ import model from '../models';
 import ErrorResponse from '../utils/errorResponse';
 import asyncHandler from '../middlewares/async';
 
-const { Video } = model;
+const { Video, Tag } = model;
 
 // // @desc      Get all videos
 // // @route     GET /videos
