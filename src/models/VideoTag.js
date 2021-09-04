@@ -1,32 +1,26 @@
 'use strict';
-
 import { Model } from 'sequelize';
 export default (sequelize, DataTypes) => {
-  class Tags extends Model {
+  class VideoTag extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.belongsToMany(models.Video, {
-        through: 'VideoTags',
-        foreignKey: 'vagId'
-      });
+      this.belongsTo(models.Video, { foreignKey: 'videoId' });
+      this.belongsTo(models.Tag, { foreignKey: 'tagId' });
     }
   }
-  Tags.init(
+  VideoTag.init(
     {
-      value: {
-        type: DataTypes.STRING,
-        unique: true,
-        allowNull: false
-      }
+      videoId: DataTypes.INTEGER,
+      tagId: DataTypes.INTEGER
     },
     {
       sequelize,
-      modelName: 'Tag'
+      modelName: 'VideoTag'
     }
   );
-  return Tags;
+  return VideoTag;
 };
