@@ -2,7 +2,7 @@ import model from '../models';
 import ErrorResponse from '../utils/errorResponse';
 import asyncHandler from '../middlewares/async';
 
-const { Video, Tag } = model;
+const { Video } = model;
 
 // // @desc      Get all videos
 // // @route     GET /videos
@@ -17,12 +17,12 @@ export const getVideos = asyncHandler(async (req, res, next) => {
 // @route     GET /videos/:id
 // @access    Public
 export const getVideo = asyncHandler(async (req, res, next) => {
-  const video = await Video.findOne({ where: { id: req.params.id } });
+  const { id } = req.params;
+
+  const video = await Video.findByPk(id);
 
   if (!video) {
-    return next(
-      new ErrorResponse(`Video not found with id ${req.params.id}`, 404)
-    );
+    return next(new ErrorResponse(`Video not found with id ${id}`, 404));
   }
 
   res.status(200).json({ success: true, data: video });
@@ -42,26 +42,27 @@ export const createVideo = asyncHandler(async (req, res, next) => {
 // @access    Public
 export const updateVideo = asyncHandler(async (req, res, next) => {
   const { name, url, description } = req.body;
-  const id = req.params.id;
+  const { id } = req.params;
 
-  const video = await Video.findOne({ where: { id } });
-
+  const video = await Video.findByPk(id);
   if (!video) {
     return next(new ErrorResponse(`Video not found with id ${id}`, 404));
   }
 
-  const updatedVideo = await video.update({ name, url, description });
+  await video.update({ name, url, description });
 
-  res.status(200).json({ success: true, data: updateVideo });
+  const updatedVideo = video.get();
+
+  res.status(200).json({ success: true, data: updatedVideo });
 });
 
 // @desc      Remove video
 // @route     DELETE /videos/:id
 // @access    Public
 export const removeVideo = asyncHandler(async (req, res, next) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
-  const video = await Video.findOne({ where: { id } });
+  const video = await Video.findByPk(id);
 
   if (!video) {
     return next(new ErrorResponse(`Video not found with id ${id}`, 404));

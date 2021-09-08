@@ -28,8 +28,6 @@ app.use('/tags', tags);
 // Handling errors
 app.use(errorHandler);
 
-const port = 5000;
-
 const PORT = process.env.PORT || 5000;
 
 app.listen(
