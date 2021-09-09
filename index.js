@@ -5,7 +5,8 @@ import colors from 'colors';
 import { errorHandler } from './src/middlewares/error';
 
 // Route files
-import route from './src/routes';
+import videos from './src/routes/videos';
+import tags from './src/routes/tags';
 
 // Loads .env file contents into process.env
 config();
@@ -20,12 +21,12 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-route(app);
+// Mount routers
+app.use('/videos', videos);
+app.use('/tags', tags);
 
 // Handling errors
 app.use(errorHandler);
-
-const port = 5000;
 
 const PORT = process.env.PORT || 5000;
 
