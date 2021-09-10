@@ -11,8 +11,20 @@ describe('GET /api/check', function () {
     request(api)
       .get('/api/check')
       .expect(200)
-      .end(function (err, res) {
-        if (err) done(err);
+      .end((err) => {
+        if (err) return done(err);
+        done();
+      });
+  });
+});
+
+describe('Videos flow', function () {
+  it('Get all videos', function (done) {
+    request(api)
+      .get('/api/videos')
+      .expect(200)
+      .end((err) => {
+        if (err) return done(err);
         done();
       });
   });
