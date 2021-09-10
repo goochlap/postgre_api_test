@@ -2,7 +2,7 @@ const dotenv = require('dotenv');
 const request = require('supertest');
 const colors = require('colors');
 
-const video = require('./data/videos');
+const { video, videoUpdated } = require('./data/videos');
 
 // Load .env file
 dotenv.config();
@@ -71,4 +71,35 @@ describe('Videos flow'.brightBlue, () => {
   });
 
   // Test the POST route
+  describe('POST /api/videos', () => {
+    it('it should POST a new video', (done) => {
+      request(api)
+        .post('/api/videos')
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .send(video)
+        .expect(201)
+        .end((err) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  // Test the PUT route
+  describe('PUT /api/videos/:id', () => {
+    it('it should PUT a video', (done) => {
+      const id = 40;
+      request(api)
+        .put(`/api/videos/${id}`)
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .send(videoUpdated)
+        .expect(200)
+        .end((err) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
 });

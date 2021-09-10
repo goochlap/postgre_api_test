@@ -4,4 +4,10 @@ const video = {
   url: 'www.videoTest.com'
 };
 
-module.exports = video;
+const videoUpdated = {
+  name: 'VideoTestUpdated',
+  description: 'lorem ipsum',
+  url: 'www.videoTestUpdated.com'
+};
+
+module.exports = { video, videoUpdated };
