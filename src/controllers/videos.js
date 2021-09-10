@@ -14,7 +14,7 @@ export const getVideos = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Get a single video
-// @route     GET /videos/:id
+// @route     GET /api/videos/:id
 // @access    Public
 export const getVideo = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
@@ -29,7 +29,7 @@ export const getVideo = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Create new video
-// @route     POST /videos
+// @route     POST /api/videos
 // @access    Public
 export const createVideo = asyncHandler(async (req, res, next) => {
   const video = await Video.create(req.body);
@@ -38,7 +38,7 @@ export const createVideo = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Update video
-// @route     PUT /videos/:id
+// @route     PUT /api/videos/:id
 // @access    Public
 export const updateVideo = asyncHandler(async (req, res, next) => {
   const { name, url, description } = req.body;
@@ -57,7 +57,7 @@ export const updateVideo = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Remove video
-// @route     DELETE /videos/:id
+// @route     DELETE /api/videos/:id
 // @access    Public
 export const removeVideo = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
@@ -74,7 +74,7 @@ export const removeVideo = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Add tag to a video
-// @route     PATCH /videos/:videoId/tags/:tagId
+// @route     PATCH /api/videos/:videoId/tags/:tagId
 // @access    Public
 export const addTagToVideo = asyncHandler(async (req, res, next) => {
   const { videoId, tagId } = req.params;
@@ -108,7 +108,7 @@ export const addTagToVideo = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Remove tag to a video
-// @route     PUT /videos/:videoId/tags/:tagId
+// @route     PUT /api/videos/:videoId/tags/:tagId
 // @access    Public
 export const removeTagToVideo = asyncHandler(async (req, res, next) => {
   const { videoId, tagId } = req.params;
