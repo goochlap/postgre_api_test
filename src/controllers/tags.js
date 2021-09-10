@@ -5,7 +5,7 @@ import asyncHandler from '../middlewares/async';
 const { Tag } = model;
 
 // @desc      Create new tag
-// @route     POST /tags
+// @route     POST /api/tags
 // @access    Public
 export const createTag = asyncHandler(async (req, res, next) => {
   // Check if tag already exist in DB
@@ -19,7 +19,7 @@ export const createTag = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Delete tag
-// @route     DELETE /tags/:id
+// @route     DELETE /api/tags/:id
 // @access    Public
 export const removeTag = asyncHandler(async (req, res, next) => {
   const { id } = req.params;

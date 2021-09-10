@@ -22,13 +22,15 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Mount routers
-app.use('/videos', videos);
-app.use('/tags', tags);
+app.use('/api/videos', videos);
+app.use('/api/tags', tags);
 
 // Handling errors
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
+
+app.get('/api/check', (req, res) => res.status(200).send('API is running...'));
 
 app.listen(
   PORT,
