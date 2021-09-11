@@ -3,6 +3,7 @@ const request = require('supertest');
 const colors = require('colors');
 
 const { video, videoUpdated } = require('./data/videos');
+const { tag } = require('./data/tags');
 
 // Load .env file
 dotenv.config();
@@ -20,6 +21,8 @@ describe('GET /api/check', function () {
       });
   });
 });
+
+// Test Videos FLOW
 
 describe('Videos flow'.brightBlue, () => {
   const id = video.id;
@@ -107,9 +110,41 @@ describe('Videos flow'.brightBlue, () => {
     it('it should DELETE a video', (done) => {
       request(api)
         .delete(`/api/videos/${id}`)
-        .send(videoUpdated)
         .expect(204)
         .end((err) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+});
+
+// Test Tags FLOW
+
+describe('Tags flow'.brightBlue, () => {
+  // Test the POST route
+  describe('POST /api/tags', () => {
+    it('it should POST a new tag', (done) => {
+      request(api)
+        .post('/api/tags')
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .send(tag)
+        .expect(201)
+        .end((err, res) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  // Test the DELETE route
+  describe('DELETE /api/tags/:id', () => {
+    it('it should DELETE a new tag', (done) => {
+      request(api)
+        .delete(`/api/tags/${tag.id}`)
+        .expect(204)
+        .end((err, res) => {
           if (err) return done(err);
           done();
         });
