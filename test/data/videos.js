@@ -1,4 +1,5 @@
 const video = {
+  id: '1',
   name: 'VideoTest',
   description: 'lorem ipsum',
   url: 'www.videoTest.com'
