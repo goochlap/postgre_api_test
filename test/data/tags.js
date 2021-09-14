@@ -3,4 +3,8 @@ const tag = {
   value: 'tagTesting'
 };
 
-module.exports = { tag };
+const tagToAdd = {
+  id: '2',
+  value: 'tagToAddTest'
+};
+module.exports = { tag, tagToAdd };

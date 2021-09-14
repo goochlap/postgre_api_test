@@ -2,8 +2,8 @@ const dotenv = require('dotenv');
 const request = require('supertest');
 const colors = require('colors');
 
-const { video, videoUpdated } = require('./data/videos');
-const { tag } = require('./data/tags');
+const { video, videoUpdated, videoToTag } = require('./data/videos');
+const { tag, tagToAdd } = require('./data/tags');
 
 // Load .env file
 dotenv.config();
@@ -131,7 +131,7 @@ describe('Tags flow'.brightBlue, () => {
         .set('Accept', 'application/json')
         .send(tag)
         .expect(201)
-        .end((err, res) => {
+        .end((err) => {
           if (err) return done(err);
           done();
         });
@@ -151,3 +151,71 @@ describe('Tags flow'.brightBlue, () => {
     });
   });
 });
+
+// Test Relations FLOW video & tag
+
+describe('Relations flow'.brightBlue, () => {
+  // Add a video
+  describe('POST /api/videos', () => {
+    it('it should POST a new video', (done) => {
+      request(api)
+        .post('/api/videos')
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .send(videoToTag)
+        .expect(201)
+        .end((err) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  // Add a tag
+  describe('POST /api/tags', () => {
+    it('it should POST a new tag', (done) => {
+      request(api)
+        .post('/api/tags')
+        .set('Content-Type', 'application/json')
+        .set('Accept', 'application/json')
+        .send(tagToAdd)
+        .expect(201)
+        .end((err) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  // Add a tag to a video
+  describe('PATCH /api/videos/:videoId/tags/:tagId', () => {
+    it('it should add tag to a video', (done) => {
+      const videoId = videoToTag.id;
+      const tagId = tagToAdd.id;
+      request(api)
+        .patch(`/api/videos/${videoId}/tags/${tagId}`)
+        .expect(201)
+        .end((err) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
+  // remove tag to a video
+  describe('PUT /api/videos/:videoId/tags/:tagId', () => {
+    it('it should remove tag to a video', (done) => {
+      const videoId = videoToTag.id;
+      const tagId = tagToAdd.id;
+      request(api)
+        .put(`/api/videos/${videoId}/tags/${tagId}`)
+        .expect(200)
+        .end((err) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+});
+
+// Drop DB
