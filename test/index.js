@@ -1,12 +1,12 @@
-const dotenv = require('dotenv');
-const request = require('supertest');
-const colors = require('colors');
+import { config } from 'dotenv';
+import request from 'supertest';
+import colors from 'colors';
 
-const { video, videoUpdated, videoToTag } = require('./data/videos');
-const { tag, tagToAdd } = require('./data/tags');
+import { video, videoUpdated, videoToTag } from './data/videos';
+import { tag, tagToAdd } from './data/tags';
 
 // Load .env file
-dotenv.config();
+config();
 
 const api = `http://localhost:${process.env.PORT || 5000}`;
 
@@ -26,7 +26,6 @@ describe('GET /api/check', function () {
 
 describe('Videos flow'.brightBlue, () => {
   const id = video.id;
-
   // Test the GET Route
   describe('GET /api/videos', () => {
     it('it should GET all videos', (done) => {

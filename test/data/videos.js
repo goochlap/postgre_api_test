@@ -18,4 +18,4 @@ const videoToTag = {
   url: 'www.videoToTagTest.com'
 };
 
-module.exports = { video, videoUpdated, videoToTag };
+export { video, videoUpdated, videoToTag };

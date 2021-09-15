@@ -7,4 +7,5 @@ const tagToAdd = {
   id: '2',
   value: 'tagToAddTest'
 };
-module.exports = { tag, tagToAdd };
+
+export { tag, tagToAdd };
