@@ -11,4 +11,11 @@ const videoUpdated = {
   url: 'www.videoTestUpdated.com'
 };
 
-module.exports = { video, videoUpdated };
+const videoToTag = {
+  id: '2',
+  name: 'VideoToTag',
+  description: 'lorem ipsum',
+  url: 'www.videoToTagTest.com'
+};
+
+export { video, videoUpdated, videoToTag };

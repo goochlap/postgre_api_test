@@ -1,2 +1,2 @@
 SELECT *
-FROM "Videos"
+FROM "Tags"
