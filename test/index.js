@@ -137,9 +137,22 @@ describe('Tags flow'.brightBlue, () => {
     });
   });
 
+  // Test the GET route
+  describe('GET /api/tags/:id', () => {
+    it('it should GET a tag and return his videos', (done) => {
+      request(api)
+        .get(`/api/tags/${tag.id}`)
+        .expect(200)
+        .end((err) => {
+          if (err) return done(err);
+          done();
+        });
+    });
+  });
+
   // Test the DELETE route
   describe('DELETE /api/tags/:id', () => {
-    it('it should DELETE a new tag', (done) => {
+    it('it should DELETE a tag', (done) => {
       request(api)
         .delete(`/api/tags/${tag.id}`)
         .expect(204)
