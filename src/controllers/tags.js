@@ -2,7 +2,7 @@ import model from '../models';
 import ErrorResponse from '../utils/errorResponse';
 import asyncHandler from '../middlewares/async';
 
-const { Tag } = model;
+const { Tag, Video } = model;
 
 // @desc      Create new tag
 // @route     POST /api/tags
@@ -30,4 +30,16 @@ export const removeTag = asyncHandler(async (req, res, next) => {
   await tag.destroy({ where: { id } });
 
   next(res.status(204));
+});
+
+// @desc      Get tag including his videos
+// @route     GET /api/tags/:id
+// @access    Public
+export const getTag = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+
+  const tag = await Tag.findOne({ where: { id }, include: [Video] });
+  if (!tag) return next(new ErrorResponse(`Tag not found with id ${id}`, 404));
+
+  res.status(200).json({ success: true, videos: tag.Videos });
 });
