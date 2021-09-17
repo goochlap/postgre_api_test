@@ -8,9 +8,43 @@ const { Video, Tag } = model;
 // // @route     GET /videos
 // // @access    Public
 export const getVideos = asyncHandler(async (req, res, next) => {
-  const videos = await Video.findAll();
+  // Get the page & size query
+  const page = parseInt(req.query.page, 10) || 0;
+  const size = parseInt(req.query.size, 10) || 5;
 
-  res.status(200).json({ success: true, count: videos.length, data: videos });
+  const videos = await Video.findAndCountAll({
+    limit: size,
+    offset: page * size
+  });
+
+  const totalVideos = videos.count;
+
+  // Pagination
+  const pagination = {};
+
+  const startIndex = page * size;
+  const endIndex = page * size;
+
+  if (endIndex < totalVideos) {
+    pagination.next = {
+      page: page + 1
+    };
+  }
+
+  if (startIndex > 0) {
+    pagination.prev = {
+      page: page - 1
+    };
+  }
+
+  res.status(200).json({
+    success: true,
+    totalVideos: videos.count,
+    totalPages: Math.ceil(videos.count / Number.parseInt(size)),
+    currentPage: page,
+    pagination,
+    videos: videos.rows
+  });
 });
 
 // @desc      Get a single video
