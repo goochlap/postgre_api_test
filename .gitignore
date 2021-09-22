@@ -1,3 +1,4 @@
-~/.nvm/
+~
+.nvm
 node_modules/
 .env
