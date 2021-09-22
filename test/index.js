@@ -8,6 +8,9 @@ import { tag, tagToAdd } from './data/tags';
 // import models
 import model from '../src/models';
 
+// import DB
+import db from '../src/models/index';
+
 const { Tag, Video } = model;
 
 // Load .env file
@@ -16,9 +19,10 @@ config();
 const api = `http://localhost:${process.env.PORT || 5000}`;
 
 before(async () => {
-  console.log('Cleaning Database...'.brightGreen);
-  await Video.destroy({ truncate: { cascade: true } });
-  await Tag.destroy({ truncate: { cascade: true } });
+  await db.sequelize.sync({ force: true });
+  console.log('All models were synchronized successfully.'.brightGreen);
+  // await Video.destroy({ truncate: { cascade: true } });
+  // await Tag.destroy({ truncate: { cascade: true } });
 });
 
 describe('GET /api/check', function () {
