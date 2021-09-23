@@ -4,8 +4,10 @@
   "description": "back end api postgres",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require @babel/register 'test/**/*.test.js' --exit",
-    "dev": "nodemon --exec babel-node index.js"
+    "start-server": "babel-node index.js",
+    "dev": "nodemon --exec babel-node index.js",
+    "test": "NODE_ENV=test start-server-and-test start-server 5000/api/check mocha",
+    "mocha": "mocha --require @babel/register 'test/**/*.test.js' --exit"
   },
   "author": "goochlap",
   "license": "ISC",
@@ -25,6 +27,7 @@
     "@babel/register": "^7.15.3",
     "mocha": "^9.1.1",
     "nodemon": "^2.0.12",
+    "start-server-and-test": "^1.14.0",
     "supertest": "^6.1.6"
   }
 }
